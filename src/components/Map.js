@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Map as BaseMap, TileLayer, ZoomControl } from 'react-leaflet';
 
@@ -18,6 +18,18 @@ const Map = ( props ) => {
     ref: mapRef,
     effect: mapEffect,
   });
+
+  useEffect(() => {
+    const { current = {} } = mapRef;
+    const { leafletElement: map } = current;
+
+    // Invaliding the size on page load to avoid issues when navigating between
+    // two different pages
+
+    requestAnimationFrame(() => {
+      map.invalidateSize();
+    })
+  }, []);
 
   const services = useMapServices({
     names: [...new Set([defaultBaseMap, DEFAULT_MAP_SERVICE])],
