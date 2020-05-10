@@ -18,7 +18,7 @@
   background-color: $blue-grey-800;
 
   &:after {
-    opacity: .3;
+    opacity: .25;
     position: absolute;
     top: 0;
     left: 0;
@@ -30,17 +30,47 @@
     background-size: cover;
   }
 
+}
+
+.home-hero-content {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  height: 2em;
+  margin: auto;
+
+  .logo {
+
+    color: white;
+    font-size: 2.2em;
+
+    img {
+      margin-right: .4em;
+    }
+
+  }
+
+  h1 {
+    margin: 0;
+  }
+
   p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    z-index: 1;
-    width: 100%;
-    height: 1em;
-    margin: auto;
+
+    color: $blue-grey-100;
+    font-size: 1.4em;
+    margin: .5em 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
   }
 
   a {
@@ -50,8 +80,8 @@
     justify-content: center;
     color: white;
     text-decoration: none;
-    font-size: 1.2em;
     font-weight: 900;
+    font-size: .7em;
     letter-spacing: 1px;
     text-transform: uppercase;
     background-color: $gatsby-purple;

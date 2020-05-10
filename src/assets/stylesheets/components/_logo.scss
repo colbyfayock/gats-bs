@@ -1,0 +1,19 @@
+.logo {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: lighten($blue-grey-100, 5);
+  font-size: 2em;
+  font-weight: 500;
+  text-decoration: none;
+  margin: 0;
+
+  img {
+    width: 1.2em;
+    margin-right: .5em;
+    border: solid 3px lighten($gatsby-purple, 10);
+    border-radius: 100%;
+  }
+
+}

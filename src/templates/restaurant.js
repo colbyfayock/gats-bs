@@ -16,7 +16,7 @@ const TemplateRestaurant = ({ pageContext }) => {
 
   const { name, location, address, delivery, hours, phoneNumber, photo } = restaurant;
   const center = [location?.latitude, location?.longitude];
-console.log('restaurant', restaurant)
+
   /**
    * mapEffect
    * @description Fires a callback once the page renders

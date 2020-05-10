@@ -3,6 +3,7 @@ import { Link } from 'gatsby';
 import { FaGithub, FaTwitter } from 'react-icons/fa';
 
 import Container from 'components/Container';
+import Logo from 'components/Logo';
 
 import logo from 'assets/images/gats-bs-logo.png';
 
@@ -12,8 +13,7 @@ const Header = () => {
       <Container type="content">
         <p className="header-logo">
           <Link to="/">
-            <img src={logo} alt="Logo" />
-            Gats B's
+            <Logo />
           </Link>
         </p>
         <ul className="header-links">

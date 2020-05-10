@@ -8,6 +8,7 @@ import { useRestaurants } from 'hooks';
 
 import Layout from 'components/Layout';
 import Map from 'components/Map';
+import Logo from 'components/Logo';
 
 const LOCATION = {
   lat: 38.9072,
@@ -78,11 +79,19 @@ const IndexPage = () => {
       </Helmet>
 
       <div className="home-hero">
-        <p>
-          <a href="#locations">
-            <FaMapMarkerAlt />View Locations
-          </a>
-        </p>
+        <div className="home-hero-content">
+          <h1>
+            <Logo />
+          </h1>
+          <p>
+            Your local family favorite resturant!
+          </p>
+          <p>
+            <a href="#locations">
+              <FaMapMarkerAlt />View Locations
+            </a>
+          </p>
+        </div>
       </div>
 
       <Map {...mapSettings} />
