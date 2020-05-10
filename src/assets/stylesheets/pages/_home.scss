@@ -9,58 +9,64 @@
     padding: 0;
   }
 
-  .popup-gatsby {
-    display: flex;
-    width: 36em;
-    padding: 1em;
-    border-radius: 1em;
+}
+
+.home-hero {
+
+  position: relative;
+  height: 30em;
+  background-color: $blue-grey-800;
+
+  &:after {
+    opacity: .3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/header.jpg');
+    background-position: center center;
+    background-size: cover;
   }
 
-  .popup-gatsby-image {
+  p {
     display: flex;
-    align-items: center;
-    margin-right: 2em;
-  }
-
-  .popup-gatsby-content {
-
-    display: flex;
-    align-items: flex-start;
     justify-content: center;
-    flex-direction: column;
-    align-content: center;
-    text-align: left;
-    padding-right: 1em;
-
-    h1 {
-      margin: 0 0 .2em;
-    }
-    p {
-      margin: 0 0 .5em;
-    }
-
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 100%;
+    height: 1em;
+    margin: auto;
   }
 
-  .gatsby-astronaut {
+  a {
 
-    overflow: hidden;
-    width: 10em;
-    height: 10em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     background-color: $gatsby-purple;
-    border-radius: 100%;
-    border: solid 6px $gatsby-purple;
-    margin: 0;
+    padding: .8em 1em;
+    box-shadow: 0 2px 6px rgba($blue-grey-900, .8);
 
-    img {
-      width: 100%;
-      height: auto;
+    svg {
+      margin-right: .4em;
     }
 
   }
 
 }
 
-.home-start {
+.home-locations {
 
   padding-top: 4em;
   padding-bottom: 4em;
@@ -69,12 +75,27 @@
     margin-top: 0;
   }
 
+  ul {
+    font-size: 1.2em;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: .8em;
+  }
+
   p {
     margin-bottom: 1.2em;
   }
 
   pre {
     margin-bottom: 1.5em;
+  }
+
+  a {
+    color: $blue-grey-800;
   }
 
 }

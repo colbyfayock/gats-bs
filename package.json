@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-leaflet",
-  "description": "A Gatsby starter with Leafet!",
-  "version": "0.2.4",
+  "name": "gats-bs",
+  "description": "Your local family favorite resturant!",
+  "version": "0.1.0",
   "author": "Colby Fayock <hello@colbyfayock.com>",
   "dependencies": {
     "gatsby": "^2.20.12",
@@ -10,13 +10,16 @@
     "gatsby-plugin-resolve-src": "^2.0.0",
     "gatsby-plugin-sass": "^2.2.1",
     "gatsby-source-filesystem": "^2.2.2",
+    "gatsby-source-graphql": "^2.5.1",
     "leaflet": "^1.6.0",
     "node-sass": "^4.13.1",
+    "parameterize": "^1.0.0",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^5.2.0",
+    "react-icons": "^3.10.0",
     "react-leaflet": "^2.6.3"
   },
   "devDependencies": {
@@ -67,9 +70,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/colbyfayock/gatsby-starter-leaflet"
+    "url": "https://github.com/colbyfayock/gats-bs"
   },
   "bugs": {
-    "url": "https://github.com/colbyfayock/gatsby-starter-leaflet/issues"
+    "url": "https://github.com/colbyfayock/gats-bs/issues"
   }
 }

@@ -1,15 +1,13 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
+import { Link } from 'gatsby';
 import L from 'leaflet';
-import { Marker } from 'react-leaflet';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 
-import { promiseToFlyTo, getCurrentLocation } from 'lib/map';
+import { useRestaurants } from 'hooks';
 
 import Layout from 'components/Layout';
-import Container from 'components/Container';
 import Map from 'components/Map';
-
-import gatsby_astronaut from 'assets/images/gatsby-astronaut.jpg';
 
 const LOCATION = {
   lat: 38.9072,
@@ -17,66 +15,58 @@ const LOCATION = {
 };
 const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 2;
-const ZOOM = 10;
-
-const timeToZoom = 2000;
-const timeToOpenPopupAfterZoom = 4000;
-const timeToUpdatePopupAfterZoom = timeToOpenPopupAfterZoom + 3000;
-
-const popupContentHello = `<p>Hello 👋</p>`;
-const popupContentGatsby = `
-  <div class="popup-gatsby">
-    <div class="popup-gatsby-image">
-      <img class="gatsby-astronaut" src=${gatsby_astronaut} />
-    </div>
-    <div class="popup-gatsby-content">
-      <h1>Gatsby Leaflet Starter</h1>
-      <p>Welcome to your new Gatsby site. Now go build something great!</p>
-    </div>
-  </div>
-`;
+const DEFAULT_BASEMAP = 'Mapbox';
 
 const IndexPage = () => {
-  const markerRef = useRef();
+  const { restaurants } = useRestaurants();
+  const restaurantsGeoJson = {
+    type: 'FeatureCollection',
+    features: restaurants.map((restaurant = {}) => {
+      const { location = {} } = restaurant;
+      const { latitude, longitude } = location;
+      return {
+        type: 'Feature',
+        properties: {
+          ...restaurant
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [
+            longitude,
+            latitude
+          ]
+        }
+      }
+    })
+  }
 
   /**
    * mapEffect
    * @description Fires a callback once the page renders
-   * @example Here this is and example of being used to zoom in and set a popup on load
    */
 
-  async function mapEffect({ leafletElement } = {}) {
-    if ( !leafletElement ) return;
+  function mapEffect({ leafletElement: map } = {}) {
+    if ( !map ) return;
 
-    const popup = L.popup({
-      maxWidth: 800
-    });
+    map.eachLayer(layer => {
+      const { options = {} } = layer;
+      const { name } = options;
+      if ( name === DEFAULT_BASEMAP ) return;
+      map.removeLayer(layer);
+    })
 
-    const location = await getCurrentLocation().catch(() => LOCATION );
+    const geoJson = new L.GeoJSON(restaurantsGeoJson);
+    const geoJsonBounds = geoJson.getBounds();
 
-    const { current = {} } = markerRef || {};
-    const { leafletElement: marker } = current;
+    geoJson.addTo(map);
 
-    marker.setLatLng( location );
-    popup.setLatLng( location );
-    popup.setContent( popupContentHello );
-
-    setTimeout( async () => {
-      await promiseToFlyTo( leafletElement, {
-        zoom: ZOOM,
-        center: location
-      });
-
-      marker.bindPopup( popup );
-
-      setTimeout(() => marker.openPopup(), timeToOpenPopupAfterZoom );
-      setTimeout(() => marker.setPopupContent( popupContentGatsby ), timeToUpdatePopupAfterZoom );
-    }, timeToZoom );
+    map.fitBounds(geoJsonBounds);
+    map.setZoom(map.getZoom() - 1);
   }
 
   const mapSettings = {
     center: CENTER,
-    defaultBaseMap: 'OpenStreetMap',
+    defaultBaseMap: DEFAULT_BASEMAP,
     zoom: DEFAULT_ZOOM,
     mapEffect
   };
@@ -87,18 +77,29 @@ const IndexPage = () => {
         <title>Home Page</title>
       </Helmet>
 
-      <Map {...mapSettings}>
-        <Marker ref={markerRef} position={CENTER} />
-      </Map>
+      <div className="home-hero">
+        <p>
+          <a href="#locations">
+            <FaMapMarkerAlt />View Locations
+          </a>
+        </p>
+      </div>
 
-      <Container type="content" className="text-center home-start">
-        <h2>Still Getting Started?</h2>
-        <p>Run the following in your terminal!</p>
-        <pre>
-          <code>gatsby new [directory] https://github.com/colbyfayock/gatsby-starter-leaflet</code>
-        </pre>
-        <p className="note">Note: Gatsby CLI required globally for the above command</p>
-      </Container>
+      <Map {...mapSettings} />
+
+      <div className="text-center home-locations">
+        <h2 id="locations">Locations</h2>
+        <ul>
+          { restaurants.map((restaurant) => {
+            const { id, name, path } = restaurant;
+            return (
+              <li key={id}>
+                <Link to={path}>{ name }</Link>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </Layout>
   );
 };
