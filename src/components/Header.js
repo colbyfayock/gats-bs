@@ -5,8 +5,6 @@ import { FaGithub, FaTwitter } from 'react-icons/fa';
 import Container from 'components/Container';
 import Logo from 'components/Logo';
 
-import logo from 'assets/images/gats-bs-logo.png';
-
 const Header = () => {
   return (
     <header className="header">

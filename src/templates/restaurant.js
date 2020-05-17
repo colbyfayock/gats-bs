@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Marker } from 'react-leaflet';
 
@@ -11,7 +12,7 @@ import Map from 'components/Map';
 
 const TemplateRestaurant = ({ pageContext }) => {
   const { restaurant } = useRestaurant({
-    byId: pageContext?.id
+    byId: pageContext?.id,
   });
 
   const { name, location, address, delivery, hours, phoneNumber, photo } = restaurant;
@@ -24,14 +25,13 @@ const TemplateRestaurant = ({ pageContext }) => {
 
   function mapEffect({ leafletElement: map } = {}) {
     if ( !map ) return;
-
   }
 
   const mapSettings = {
     center,
     zoom: 18,
     defaultBaseMap: 'Mapbox',
-    mapEffect
+    mapEffect,
   };
 
   return (
@@ -39,30 +39,33 @@ const TemplateRestaurant = ({ pageContext }) => {
       <Helmet>
         <title>Home Page</title>
       </Helmet>
-      <div className="restaurant-hero" style={{
-        backgroundImage: `url(${photo?.url})`
-      }}>
+      <div
+        className="restaurant-hero"
+        style={{
+          backgroundImage: `url(${photo?.url})`,
+        }}
+      >
         <h1>{ name }</h1>
       </div>
       <Container type="content">
         <div className="restaurant-info">
           <h2>Address</h2>
-          <address dangerouslySetInnerHTML={{
-            __html: returnsToBr(address)
-          }} />
+          <address
+            dangerouslySetInnerHTML={{
+              __html: returnsToBr( address ),
+            }}
+          />
           <h2>Phone Number</h2>
-          <p>
-            {formatPhone(phoneNumber)}
-          </p>
+          <p>{ formatPhone( phoneNumber ) }</p>
           <h2>Hours</h2>
-          <p dangerouslySetInnerHTML={{
-            __html: returnsToBr(hours)
-          }} />
+          <p
+            dangerouslySetInnerHTML={{
+              __html: returnsToBr( hours ),
+            }}
+          />
           <h2>More Info</h2>
           <ul>
-            <li>
-              Delivery: {delivery ? 'Yes' : 'No'}
-            </li>
+            <li>Delivery: { delivery ? 'Yes' : 'No' }</li>
           </ul>
         </div>
         <Map {...mapSettings}>
@@ -71,6 +74,10 @@ const TemplateRestaurant = ({ pageContext }) => {
       </Container>
     </Layout>
   );
-}
+};
+
+TemplateRestaurant.propTypes = {
+  pageContext: PropTypes.object,
+};
 
 export default TemplateRestaurant;

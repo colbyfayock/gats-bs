@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { Link } from 'gatsby';
 import L from 'leaflet';
 import { FaMapMarkerAlt } from 'react-icons/fa';
@@ -12,7 +12,7 @@ import Logo from 'components/Logo';
 
 const LOCATION = {
   lat: 38.9072,
-  lng: -77.0369
+  lng: -77.0369,
 };
 const CENTER = [LOCATION.lat, LOCATION.lng];
 const DEFAULT_ZOOM = 2;
@@ -20,26 +20,24 @@ const DEFAULT_BASEMAP = 'Mapbox';
 
 const IndexPage = () => {
   const { restaurants } = useRestaurants();
+
   const restaurantsGeoJson = {
     type: 'FeatureCollection',
-    features: restaurants.map((restaurant = {}) => {
+    features: restaurants.map(( restaurant = {}) => {
       const { location = {} } = restaurant;
       const { latitude, longitude } = location;
       return {
         type: 'Feature',
         properties: {
-          ...restaurant
+          ...restaurant,
         },
         geometry: {
           type: 'Point',
-          coordinates: [
-            longitude,
-            latitude
-          ]
-        }
-      }
-    })
-  }
+          coordinates: [longitude, latitude],
+        },
+      };
+    }),
+  };
 
   /**
    * mapEffect
@@ -49,27 +47,27 @@ const IndexPage = () => {
   function mapEffect({ leafletElement: map } = {}) {
     if ( !map ) return;
 
-    map.eachLayer(layer => {
+    map.eachLayer(( layer ) => {
       const { options = {} } = layer;
       const { name } = options;
       if ( name === DEFAULT_BASEMAP ) return;
-      map.removeLayer(layer);
-    })
+      map.removeLayer( layer );
+    });
 
-    const geoJson = new L.GeoJSON(restaurantsGeoJson);
+    const geoJson = new L.GeoJSON( restaurantsGeoJson );
     const geoJsonBounds = geoJson.getBounds();
 
-    geoJson.addTo(map);
+    geoJson.addTo( map );
 
-    map.fitBounds(geoJsonBounds);
-    map.setZoom(map.getZoom() - 1);
+    map.fitBounds( geoJsonBounds );
+    map.setZoom( map.getZoom() - 1 );
   }
 
   const mapSettings = {
     center: CENTER,
     defaultBaseMap: DEFAULT_BASEMAP,
     zoom: DEFAULT_ZOOM,
-    mapEffect
+    mapEffect,
   };
 
   return (
@@ -83,12 +81,11 @@ const IndexPage = () => {
           <h1>
             <Logo />
           </h1>
-          <p>
-            Your local family favorite resturant!
-          </p>
+          <p>Your local family favorite resturant!</p>
           <p>
             <a href="#locations">
-              <FaMapMarkerAlt />View Locations
+              <FaMapMarkerAlt />
+              View Locations
             </a>
           </p>
         </div>
@@ -99,14 +96,14 @@ const IndexPage = () => {
       <div className="text-center home-locations">
         <h2 id="locations">Locations</h2>
         <ul>
-          { restaurants.map((restaurant) => {
+          { restaurants.map(( restaurant ) => {
             const { id, name, path } = restaurant;
             return (
               <li key={id}>
                 <Link to={path}>{ name }</Link>
               </li>
-            )
-          })}
+            );
+          }) }
         </ul>
       </div>
     </Layout>

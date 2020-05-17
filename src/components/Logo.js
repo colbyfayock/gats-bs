@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <span className="logo">
       <img src={logo} alt="Logo" />
-      Gats B's
+      Gats B&apos;s
     </span>
   );
 };
