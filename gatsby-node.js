@@ -1,14 +1,14 @@
-const path = require('path');
-const parameterize = require('parameterize')
+const path = require( 'path' );
+const parameterize = require( 'parameterize' );
 
 const createRestaurantError = 'Could not create post pages';
 
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
-  const restaurantTemplate = path.resolve(`./src/templates/restaurant.js`);
+  const restaurantTemplate = path.resolve( `./src/templates/restaurant.js` );
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql( `
     query {
       gcms {
         restaurants {
@@ -30,32 +30,32 @@ exports.createPages = async ({ actions, graphql }) => {
         }
       }
     }
-  `);
+  ` );
 
-  if (errors) throw errors;
+  if ( errors ) throw errors;
 
   const { restaurants } = data.gcms || {};
 
-  if ( !Array.isArray(restaurants) ) {
-    throw new Error(`${createRestaurantError}: Invalid restaurants`);
+  if ( !Array.isArray( restaurants )) {
+    throw new Error( `${createRestaurantError}: Invalid restaurants` );
   }
 
   restaurants.forEach(({ id, name }) => {
-    const slug = parameterize(name);
+    const slug = parameterize( name );
     createPage({
       path: `/${slug}/`,
       component: restaurantTemplate,
       context: {
         id,
-        slug
-      }
+        slug,
+      },
     });
   });
 };
 
 exports.onCreateNode = ({ node, actions }) => {
-  const { createNodeField } = actions
-  if (node.internal.type === `SitePage`) {
+  const { createNodeField } = actions;
+  if ( node.internal.type === `SitePage` ) {
     const slug = node.context && node.context.slug;
 
     if ( !slug ) return;
@@ -66,4 +66,4 @@ exports.onCreateNode = ({ node, actions }) => {
       value: slug,
     });
   }
-}
+};

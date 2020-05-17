@@ -28,7 +28,7 @@ const Map = ( props ) => {
 
     requestAnimationFrame(() => {
       map.invalidateSize();
-    })
+    });
   }, []);
 
   const services = useMapServices({

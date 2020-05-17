@@ -2,8 +2,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import parameterize from 'parameterize';
 
 export default function useRestaurants() {
-
-  const { gcms = {} } = useStaticQuery(graphql`
+  const { gcms = {} } = useStaticQuery( graphql`
     query {
       gcms {
         restaurants {
@@ -25,19 +24,18 @@ export default function useRestaurants() {
         }
       }
     }
-  `)
+  ` );
 
   let { restaurants } = gcms;
 
-  restaurants = restaurants.map(restaurant => {
+  restaurants = restaurants.map(( restaurant ) => {
     return {
       ...restaurant,
-      path: `/${parameterize(restaurant?.name)}/`
-    }
-  })
+      path: `/${parameterize( restaurant?.name )}/`,
+    };
+  });
 
   return {
-    restaurants
+    restaurants,
   };
-
 }
